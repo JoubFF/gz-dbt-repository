@@ -5,9 +5,7 @@ with temp as (
  using(orders_id)
 )
 select 
-orders_id
-, date_date
-, round((sum(total_margin) + sum(shipping_fee) - sum(logcost) - sum(ship_cost)),2) as operational_margin
+*
+, round((total_margin + shipping_fee - logcost - ship_cost),2) as operational_margin
 from temp
-group by orders_id, date_date
 order by orders_id desc
