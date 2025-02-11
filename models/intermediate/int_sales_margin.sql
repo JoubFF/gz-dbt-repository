@@ -6,10 +6,7 @@ with temp as (
  using(products_id)
 )
 select 
-date_date
-, orders_id
-, purchase_price
-, quantity
+*
 , CAST((quantity * purchase_price) AS FLOAT64) AS purchase_cost
 , Round(revenue - (quantity * purchase_price),2) as margin
 from temp
