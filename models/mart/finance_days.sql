@@ -1,10 +1,15 @@
-select 
-date_date
-, count(orders_id) as nb_transactions
-, round(sum(total_revenue),0) as revenue
-, round(avg(total_revenue),2) as Avereage_Basket
-, round(sum(total_margin),0) as margin
-, round(sum(operational_margin),0) as operational_margin
-from {{ ref("int_orders_operational")}}
-group by date_date
-order by date_date desc
+ SELECT
+     date_date
+     ,COUNT(orders_id) AS nb_transactions
+     ,ROUND(SUM(total_revenue),0) AS revenue
+     ,ROUND(AVG(total_revenue),1) AS average_basket
+     ,ROUND(SUM(total_margin),0) AS margin
+     ,ROUND(SUM(operational_margin),0) AS operational_margin
+     ,ROUND(SUM(total_purchase_cost),0) AS purchase_cost
+     ,ROUND(SUM(shipping_fee),0) AS shipping_fee
+     ,ROUND(SUM(logcost),0) AS logcost
+     ,ROUND(SUM(ship_cost),0) AS ship_cost
+     ,SUM(total_quantity) AS quantity
+ FROM {{ref("int_orders_operational")}}
+ GROUP BY  date_date
+ ORDER BY  date_date DESC
