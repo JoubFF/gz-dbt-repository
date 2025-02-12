@@ -1,0 +1,53 @@
+ # schema.yml
+
+ version: 2
+
+ sources:
+   - name: raw
+     schema : gz_raw_data
+     tables:
+       - name: product
+         identifier : raw_gz_product
+         description: produits vendus
+         columns:
+           - name : products_id
+             description : identifiant produit
+             tests:
+              - unique
+              - not_null
+           - name : purchSE_PRICE
+             description : prix dachat
+       - name: sales
+         identifier : raw_gz_sales
+         description: sales of Greenweez / we have on row per product_id found in each orders_id
+         loaded_at_field: "CAST(date_date AS TIMESTAMP)"
+         freshness:
+           warn_after: {count: 90, period: day}
+         columns:
+           - name: date_date
+             description: date of purchase
+           - name: orders_id
+             description: key
+           - name : pdt_id
+             description : identifiant produit
+           - name : revenue
+             description : chiffre d affaire du produit vendu
+           - name : quantity
+             description : quantité de produit vendu
+       - name: ship
+         identifier : raw_gz_ship
+         description: frais d expedition
+         columns:
+           - name: orders_id
+             description: key, numero de comma,nde
+             tests:
+              - unique
+              - not_null
+           - name : shipping_fee
+             description : frais expedition facturés
+           - name : shipping_fee_1
+             description : frais expedition facturés doublon
+           - name : logCost
+             description : couts logistiques
+           - name : ship_cost
+             description : couts d expedition
