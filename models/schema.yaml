@@ -69,3 +69,9 @@
             tests:
               - not_null
               - unique
+        - name: finance_campaigns_days
+          identifier: finance_campaigns_day
+          columns:
+          - name: date_date
+            tests:
+              - test_finance_campaign_day(model,column_name)
